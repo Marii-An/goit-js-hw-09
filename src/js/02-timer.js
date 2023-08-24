@@ -11,6 +11,7 @@ const leftValues = document.querySelectorAll('.value');
 let timer = null;
 
 startButton.disabled = true;
+let userDate;
 
 flatpickr(setDate, {
   enableTime: true,
@@ -22,6 +23,7 @@ flatpickr(setDate, {
       window.alert('Please choose a date in the future');
     } else {
       startButton.disabled = false;
+      userDate = selectedDates[0];
     }
   },
 });
@@ -30,9 +32,9 @@ startButton.addEventListener('click', () => {
   leftValues.forEach(item => item.classList.toggle('end'));
   startButton.disabled = true;
   leftDays.disabled = true;
-  const userDate = new Date(leftDays.value);
   timer = setInterval(() => {
-    const leftTime = userDate - Date.now();
+    const currentTime = new Date().getTime();
+    const leftTime = userDate.getTime() - currentTime;
 
     if (leftTime < 1000) {
       leftValues.forEach(item => item.classList.toggle('end'));
